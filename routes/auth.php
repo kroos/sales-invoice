@@ -26,6 +26,10 @@ use App\Http\Controllers\{
 	PrintReportController,
 };
 
+
+use App\Http\Controllers\API\ModelAjaxSupportController;
+
+
 use App\Http\Controllers\System\ActivityLogController;
 
 use Illuminate\Support\Facades\Route;
@@ -134,3 +138,15 @@ Route::middleware('auth')->group(function () {
 	Route::delete('slipnumbers/destroy', [SlipNumbersController::class, 'destroy'])->name('slipnumbers.destroy');
 });
 
+
+
+
+
+
+
+
+
+
+	Route::controller(ModelAjaxSupportController::class)->group(function () {
+		Route::get('/getStaffSales', 'getStaffSales')->name('getStaffSales');
+	});

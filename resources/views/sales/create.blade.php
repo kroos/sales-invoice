@@ -18,5 +18,5 @@
 @endsection
 
 @section('js')
-	@include('sales._js')
+@include('sales._js')
 @endsection

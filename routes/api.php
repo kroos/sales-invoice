@@ -20,6 +20,7 @@ Route::middleware(['auth', 'auth:sanctum'])->group(function () {
 		Route::get('/remoteusers', 'remoteusers')->name('remote.user');
 		Route::get('/customersearch', 'customersearch')->name('customers.search');
 		Route::post('/slipnumbersearch', 'slipnumbersearch')->name('slipnumbers.search');
+		// Route::get('/getStaffSales', 'getStaffSales')->name('getStaffSales');
 	});
 });
 

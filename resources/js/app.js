@@ -1,5 +1,6 @@
 try {
-	require('./jquery');
+require('./jquery');
+
 	require('bootstrap/dist/js/bootstrap.bundle');
 
 	require('@fortawesome/fontawesome-free');
@@ -23,7 +24,11 @@ try {
 	window.moment = require('moment');
 	moment().format();
 
+	require('bootstrapValidator5');
+
 	window.swal = require ('sweetalert2');
+
+	require('addremrow-validator5-swal2-ajax');
 
 	require('./jquery-ui-prefix');
 
@@ -37,10 +42,11 @@ try {
 	require('./dataTable-any-number');
 	require('./dataTable-moment');
 
-	require('bootstrapValidator5');
-
-	require('addremrow-validator5-swal2-ajax');
-
 	require('./bootstrap');
 
-} catch (e) {}
+	window.config = require('./config/plugins').default;
+	// import config from './config/plugins';
+
+} catch (e) {
+	console.error('Error loading JavaScript dependencies:', e);
+}

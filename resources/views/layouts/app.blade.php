@@ -26,7 +26,7 @@ $currentYear = Carbon::now()->year;
 	<!-- Livewire CSS -->
 
 </head>
-<body class="bg-primary-subtle bg-opacity-75 min-vh-100 d-flex flex-column">
+<body class="bg-primary-subtle bg-opacity-75 min-vh-100 d-flex flex-column" data-route="{{ Route::currentRouteName() }}">
 
 	<!-- 1st nav -->
 	@include('layouts.navbar')
@@ -74,18 +74,23 @@ $currentYear = Carbon::now()->year;
 	<!-- footer end -->
 </body>
 <script src="{{ mix('js/app.js') }}"></script>
-<script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
-<script src="{{ asset('js/ckeditor/adapters/jquery.js') }}"></script>
-<script type="module">
+<script type="javascript" src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+<script type="javascript" src="{{ asset('js/ckeditor/adapters/jquery.js') }}"></script>
+<script>
+{{-- ✅ Page data injection --}}
+	@yield('js')
+</script>
+<!-- <script type="module">
 	jQuery.noConflict ();
 	(function($){
 		$(document).ready(function(){
 			$.get('/sanctum/csrf-cookie').done(function(){
-				@section('js')
+				@section('js-')
 				@show
 			});
 		});
 	})(jQuery);
 </script>
-</html>
+ -->
+ </html>
 

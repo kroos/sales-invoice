@@ -57,101 +57,101 @@ class ModelAjaxSupportController extends Controller
 	public function getActivityLogs(Request $request): JsonResponse
 	{
 		$values = ActivityLog::with('belongstouser')
-											->when($request->search, function(Builder $query) use ($request){
-												$query->where('model_type','LIKE','%'.$request->search.'%')
-												->orWhere('ip_address','LIKE','%'.$request->search.'%');
-											})
-											->when($request->id, function($query) use ($request){
-												$query->where('id', $request->id);
-											})
-											->orderBy('created_at', 'DESC')
-											->get();
+		->when($request->search, function(Builder $query) use ($request){
+			$query->where('model_type','LIKE','%'.$request->search.'%')
+			->orWhere('ip_address','LIKE','%'.$request->search.'%');
+		})
+		->when($request->id, function($query) use ($request){
+			$query->where('id', $request->id);
+		})
+		->orderBy('created_at', 'DESC')
+		->get();
 		return response()->json($values);
 	}
 
 	public function getProducts(Request $request): JsonResponse
 	{
 		$values = ProductCategory::query()
-								->with(['product' => function ($q) use ($request) {
-									$q->with('productimage');
+		->with(['product' => function ($q) use ($request) {
+			$q->with('productimage');
 
-									if ($request->id) {
-										$q->where('id', $request->id);
-									}
+			if ($request->id) {
+				$q->where('id', $request->id);
+			}
 
-									if ($request->idIn) {
-										$q->whereNotIn('id', $request->idIn);
-									}
+			if ($request->idIn) {
+				$q->whereNotIn('id', $request->idIn);
+			}
 
-									if ($request->search) {
-										$q->where('product', 'LIKE', '%' . $request->search . '%');
-									}
-								}])
-								->when($request->search, function ($query) use ($request) {
-									$query->where('product_category', 'LIKE', '%' . $request->search . '%')
-									->orWhereHas('product', function ($q) use ($request) {
-										$q->where('product', 'LIKE', '%' . $request->search . '%');
-									});
-								})
-								->when($request->id, function ($query) use ($request) {
-									$query->whereHas('product', function ($q) use ($request) {
-										$q->where('id', $request->id);
-									});
-								})
-								->get();
+			if ($request->search) {
+				$q->where('product', 'LIKE', '%' . $request->search . '%');
+			}
+		}])
+		->when($request->search, function ($query) use ($request) {
+			$query->where('product_category', 'LIKE', '%' . $request->search . '%')
+			->orWhereHas('product', function ($q) use ($request) {
+				$q->where('product', 'LIKE', '%' . $request->search . '%');
+			});
+		})
+		->when($request->id, function ($query) use ($request) {
+			$query->whereHas('product', function ($q) use ($request) {
+				$q->where('id', $request->id);
+			});
+		})
+		->get();
 		return response()->json($values);
 	}
 
 	public function getProductsdT(Request $request)
 	{
 		$values = Product::with(['category', 'productimage'])
-														->when($request->id, function ($query) use ($request) {
-															$query->where('id', $request->id);
-														})
-														->when($request->search, function ($query) use ($request) {
-															$query->where('product', 'LIKE', '%' . $request->search . '%');
-														})
-														->get();
+		->when($request->id, function ($query) use ($request) {
+			$query->where('id', $request->id);
+		})
+		->when($request->search, function ($query) use ($request) {
+			$query->where('product', 'LIKE', '%' . $request->search . '%');
+		})
+		->get();
 		return response()->json($values);
 	}
 
 	public function getUser(Request $request)
 	{
 		$values = UserGroup::with(['users' => function ($q) use ($request) {
-													$q->when($request->id, function ($q1) use ($request) {
-														$q1->where('id', $request->id);
-													});
-													$q->when($request->search, function ($q1) use ($request) {
-														$q1->where('name', 'LIKE', '%'.$request->search.'%');
-													});
-												}])
-												->get();
+			$q->when($request->id, function ($q1) use ($request) {
+				$q1->where('id', $request->id);
+			});
+			$q->when($request->search, function ($q1) use ($request) {
+				$q1->where('name', 'LIKE', '%'.$request->search.'%');
+			});
+		}])
+		->get();
 		return response()->json($values);
 	}
 
 	public function geSales(Request $request)
 	{
 		$values = Sales::query()
-								->with([
-									'slippostageimage',
-									'customer',
-									'slipnumber',
-									'salestaxes',
-									'salespayment',
-									'invuser',
-									'invitems' => fn ($q) =>
-										$request->idii ? $q->where('id', $request->idii) : null,
-								])
-								->when($request->id, fn ($q) =>
-									$q->where('id', $request->id)
-								)
-								->when($request->user, fn ($q) =>
-									$q->where('id_user', $request->user)
-								)
-								->when($request->idii, fn ($q) =>
-									$q->whereHas('invitems', fn ($q2) => $q2->where('id', $request->idii))
-								)
-								->get();
+		->with([
+			'slippostageimage',
+			'customer',
+			'slipnumber',
+			'salestaxes',
+			'salespayment',
+			'invuser',
+			'invitems' => fn ($q) =>
+			$request->idii ? $q->where('id', $request->idii) : null,
+		])
+		->when($request->id, fn ($q) =>
+					 $q->where('id', $request->id)
+				 )
+		->when($request->user, fn ($q) =>
+					 $q->where('id_user', $request->user)
+				 )
+		->when($request->idii, fn ($q) =>
+					 $q->whereHas('invitems', fn ($q2) => $q2->where('id', $request->idii))
+				 )
+		->get();
 
 		return response()->json($values);
 	}
@@ -159,28 +159,28 @@ class ModelAjaxSupportController extends Controller
 	public function getCustomers(Request $request)
 	{
 		$values = Customers::when($request->search, function($q) use ($request) {
-															$q->where('client', 'LIKE', '%'.$request->search.'%');
-														})
-														->when($request->id, function($q) use ($request) {
-															$q->where('id', $request->id);
-														})
-														->get();
+			$q->where('client', 'LIKE', '%'.$request->search.'%');
+		})
+		->when($request->id, function($q) use ($request) {
+			$q->where('id', $request->id);
+		})
+		->get();
 		return response()->json($values);
 	}
 
 	public function getBanks(Request $request)
 	{
 		$values = Banks::where('active', 1)
-													->when($request->search, function($q) use ($request) {
-															$q->where('bank', 'LIKE', '%'.$request->search.'%');
-														})
-														->when($request->id, function($q) use ($request) {
-															$q->where('id', $request->id);
-														})
-														->when($request->idIn, function($q) use ($request) {
-															$q->whereNotIn('id', $request->idIn);
-														})
-														->get();
+		->when($request->search, function($q) use ($request) {
+			$q->where('bank', 'LIKE', '%'.$request->search.'%');
+		})
+		->when($request->id, function($q) use ($request) {
+			$q->where('id', $request->id);
+		})
+		->when($request->idIn, function($q) use ($request) {
+			$q->whereNotIn('id', $request->idIn);
+		})
+		->get();
 
 		return response()->json($values);
 	}
@@ -188,15 +188,15 @@ class ModelAjaxSupportController extends Controller
 	public function getBanksT(Request $request)
 	{
 		$values = Banks::when($request->search, function($q) use ($request) {
-															$q->where('bank', 'LIKE', '%'.$request->search.'%');
-														})
-														->when($request->id, function($q) use ($request) {
-															$q->where('id', $request->id);
-														})
-														->when($request->idIn, function($q) use ($request) {
-															$q->whereNotIn('id', $request->idIn);
-														})
-														->get();
+			$q->where('bank', 'LIKE', '%'.$request->search.'%');
+		})
+		->when($request->id, function($q) use ($request) {
+			$q->where('id', $request->id);
+		})
+		->when($request->idIn, function($q) use ($request) {
+			$q->whereNotIn('id', $request->idIn);
+		})
+		->get();
 
 		return response()->json($values);
 	}
@@ -204,15 +204,15 @@ class ModelAjaxSupportController extends Controller
 	public function getTaxes(Request $request)
 	{
 		$values = Taxes::when($request->search, function($q) use ($request) {
-															$q->where('tax', 'LIKE', '%'.$request->search.'%');
-														})
-														->when($request->id, function($q) use ($request) {
-															$q->where('id', $request->id);
-														})
-														->when($request->idIn, function($q) use ($request) {
-															$q->whereNotIn('id', $request->idIn);
-														})
-														->get();
+			$q->where('tax', 'LIKE', '%'.$request->search.'%');
+		})
+		->when($request->id, function($q) use ($request) {
+			$q->where('id', $request->id);
+		})
+		->when($request->idIn, function($q) use ($request) {
+			$q->whereNotIn('id', $request->idIn);
+		})
+		->get();
 
 		return response()->json($values);
 	}
@@ -278,7 +278,7 @@ class ModelAjaxSupportController extends Controller
 	public function slipnumbersearch(Request $request)
 	{
 		$valid = TRUE;
-        // dd($cust);
+				// dd($cust);
 		foreach ($request->serial as $key => $val) {
 			$serialtrack = SlipNumbers::where('tracking_number', $val['tracking_number'])->count();
 			if ($serialtrack == 1) {
@@ -288,6 +288,51 @@ class ModelAjaxSupportController extends Controller
 			}
 			return response()->json(['valid' => $valid]);
 		}
+	}
+
+	public function getStaffSales(Request $request)
+	{
+		$sales = Sales::with([
+			'invuser:id,name,color',
+			'invitems' => function ($query) {
+				$query->where('id_product', '!=', 37)
+				->with('product:id,product');
+			}
+		])
+		->get(['id', 'id_user', 'date_sale'])
+		->groupBy(fn ($sale) => $sale->date_sale->format('M Y'))
+		->map(function ($monthlySales) {
+
+			return $monthlySales
+			->groupBy('id_user')
+			->map(function ($userSales) {
+
+				$items = $userSales
+				->pluck('invitems')
+				->flatten();
+
+				return [
+					'user' => $userSales->first()->invuser,
+
+					// 1️⃣ commission × quantity (PER USER)
+					'total_commission' => $items->sum(fn ($i) =>
+																						(float) $i->commission * (int) $i->quantity
+																					),
+
+										// 2️⃣ retail × quantity (PER USER)
+					'total_retail' => $items->sum(fn ($i) =>
+																				(float) $i->retail * (int) $i->quantity
+																			),
+
+										// 3️⃣ quantity PER PRODUCT (PER USER)
+					'product_quantities' => $items
+					->groupBy(fn ($i) => optional($i->product)->product ?? 'Unknown')
+					->map(fn ($rows) => $rows->sum('quantity')),
+				];
+			})
+						->values(); // optional: removes user_id keys		});
+    });
+		return response()->json($sales);
 	}
 
 

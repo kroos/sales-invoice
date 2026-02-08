@@ -174,38 +174,41 @@ if(\Auth::user()->id_group == 1) {
 	<div id="invItems_wrap"></div>
 
 	<div class="col-sm-12 row">
-			<div class="col-sm-6 offset-sm-6">
 
-				<div class="col-sm-12 row">
-					<div class="col-sm-3 m-0">
-						<p><strong>Tax</strong></p>
-					</div>
-					<div class="col-sm-5 m-0">
-						<select name="tax" id="taxs" multiple="multiple">
-							<option value="">Choose Tax</option>
-							@foreach(\App\Models\Taxes::all() as $r) :
-							<option value="{!! $r->id !!}" data-amount="{!! $r->amount !!}" {{ (old('tax', @$sale?->salestaxes()->first()->id_tax) == $r->id)?'selected':NULL }}>{!! $r->tax !!}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="col-sm-2 text-right m-0">
-						<p><strong id="total_tax">0.00</strong>%</p>
-					</div>
-				</div>
+		<div class="col-sm-5 m-0 my-auto">
+			<strong>Tax</strong>
+		</div>
 
-				<div class="col-sm-12 row">
-					<div class="col-sm-8">
-						<p><strong>Total Amount</strong></p>
-					</div>
-					<div class="col-sm-4 text-right">
-						<p>RM<strong id="total_amount">0.00</strong></p>
-					</div>
-				</div>
+		<div class="col-sm-5 m-0 my-auto">
+			<select name="tax" id="taxs" multiple="multiple">
+				<option value="">Choose Tax</option>
+				@foreach(\App\Models\Taxes::all() as $r) :
+				<option value="{!! $r->id !!}" data-amount="{!! $r->amount !!}" {{ (old('tax', @$sale?->salestaxes()->first()->id_tax) == $r->id)?'selected':NULL }}>{!! $r->tax !!}</option>
+				@endforeach
+			</select>
+		</div>
 
-			</div>
+		<div class="col-sm-2 m-0 my-auto  text-right">
+			<span id="total_tax">0.00</span>%
+		</div>
+
 	</div>
-	<div class="col-lg-12">
-			<button class="btn btn-primary add_field" id="invItems_add" data-id="0" type="button">
+
+	<div class="col-sm-12 row">
+
+		<div class="col-sm-10">
+			<strong>Total Amount</strong>
+		</div>
+
+		<div class="col-sm-2 text-right">
+			<strong id="total_amount">0.00</strong>
+		</div>
+
+	</div>
+
+
+	<div class="col-sm-12">
+			<button class="btn btn-sm btn-outline-primary add_field" id="invItems_add" type="button">
 				<i class="fas fa-plus"></i>&nbsp;Add Products
 			</button>
 	</div>
@@ -217,26 +220,31 @@ if(\Auth::user()->id_group == 1) {
 	<div class="card-body">
 		<div id="payment_wrap">	</div>
 
-		<div class="col-sm-12">
-			<div class="col-sm-8 offset-sm-4 row">
-				<div class="col-sm-8">
-					<p><strong>Total Payment</strong></p>
-				</div>
-				<div class="col-sm-4 text-right">
-					<p>RM<strong id="total_payment">0.00</strong></p>
-				</div>
+		<div class="col-sm-12 row">
+			<div class="col-sm-10">
+				<strong>Total Payment</strong>
 			</div>
-			<div class="col-sm-8 offset-sm-4 row">
-				<div class="col-sm-8">
-					<p><strong>Balance</strong></p>
-				</div>
-				<div class="col-sm-4 text-right">
-					<p>RM<strong id="balance">0.00</strong></p>
-				</div>
+
+			<div class="col-sm-2 text-right">
+				RM<strong id="total_payment">0.00</strong>
 			</div>
+
 		</div>
+
+		<div class="col-sm-12 row">
+
+			<div class="col-sm-10">
+				<strong>Balance</strong>
+			</div>
+
+			<div class="col-sm-2 text-right">
+				RM<strong id="balance">0.00</strong>
+			</div>
+
+		</div>
+
 		<div class="col-sm-12">
-			<button id="payment_add" class="btn btn-primary" type="button">
+			<button id="payment_add" class="btn btn-sm btn-primary" type="button">
 				<i class="fas fa-plus"></i>&nbsp;Add Payment
 			</button>
 		</div>

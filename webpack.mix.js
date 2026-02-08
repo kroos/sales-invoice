@@ -1,9 +1,18 @@
 let mix = require('laravel-mix');
+const webpack = require('webpack');
+
 
 mix.webpackConfig({
 	stats: {
 		children: true
 	},
+	plugins: [
+		new webpack.ProvidePlugin({
+			$: 'jquery',
+			jQuery: 'jquery',
+			'window.jQuery': 'jquery'
+		})
+	]
 });
 
 // Compile JavaScript

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 // load model
+use App\Models\User;
 use App\Models\Sales;
 use App\Models\SalesItems;
 use App\Models\SlipPostage;
@@ -19,6 +20,7 @@ use App\Models\SalesCustomers;
 // use Intervention\Image\Facades\Image as Image;		<-- ajaran sesat depa... hareeyyyyy!!
 use Intervention\Image\ImageManagerStatic as Image;
 
+use \Carbon\Carbon;
 use Session;
 
 use File;
@@ -30,7 +32,7 @@ use App\Http\Requests\SalesFormRequest;
 
 class SalesController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
 		return view('sales.index');
 	}
