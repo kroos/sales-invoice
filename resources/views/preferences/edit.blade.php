@@ -155,130 +155,15 @@
 
 
 @section('js')
-////////////////////////////////////////////////////////////////////////////////////
-$(`#own`).select2({
-	theme: 'bootstrap-5',
-	placeholder: 'Please choose',
-	allowClear: true,
-	closeOnSelect: true,
-	width: '100%',
-	ajax: {
-		url: '{{ route('getUser') }}',
-		type: 'GET',
-		dataType: 'json',
-		delay: 250,											// Delay to reduce server requests
-		data: function (params) {
-			return {
-				_token: '{!! csrf_token() !!}',
-				search: params.term,				// Search query
-				// id: `{{ old('company_owner', @$preference->company_owner) }}`,
-			}
-		},
-		processResults: function (data) {
-			return {
-				results: data.map(function (category) {
-					return {
-						// id: category.id,
-						text: category.group,
-						disabled: true,
-						children: category.users.map(function (users) {
-							return {
-								id: users.id,
-								text: users.name,
-							};
-						})
-
-					}
-				})
-			};
-		}
-
+window.data = {
+	route: {
+		getUser: '{{ route('getUser') }}',
 	},
-});
-
-$(`#cpic`).select2({
-	theme: 'bootstrap-5',
-	placeholder: 'Please choose',
-	allowClear: true,
-	closeOnSelect: true,
-	width: '100%',
-	ajax: {
-		url: '{{ route('getUser') }}',
-		type: 'GET',
-		dataType: 'json',
-		delay: 250,											// Delay to reduce server requests
-		data: function (params) {
-			return {
-				_token: '{!! csrf_token() !!}',
-				search: params.term,				// Search query
-				// idIn: [],
-				// id: `{{ old('company_person_in_charge', @$preference->company_person_in_charge) }}`,
-			}
-		},
-		processResults: function (data) {
-			return {
-				results: data.map(function (category) {
-					return {
-						// id: category.id,
-						text: category.group,
-						disabled: true,
-						children: category.users.map(function (users) {
-							return {
-								id: users.id,
-								text: users.name,
-							};
-						})
-
-					}
-				})
-			};
-		}
-
+	url: {},
+	old: {
+		company_person_in_charge: @json(old('company_person_in_charge', @$preference->company_person_in_charge)),
+		company_owner: @json(old('company_owner', @$preference->company_owner)),
 	},
-});
-
-@if(old('company_person_in_charge', @$preference->company_person_in_charge))
-$.ajax({
-	url: `{{ route('getUser') }}`,
-	data: {
-		_token: '{!! csrf_token() !!}',
-		id: `{{ old('company_person_in_charge', @$preference->company_person_in_charge) }}`
-	},
-	dataType: 'json'
-}).then(data => {
-	const selectedId = `{{ old('company_person_in_charge', @$preference->company_person_in_charge) }}`;
-
-	data.forEach(group => {
-		group.users?.forEach(user => {
-			if (String(user.id) === String(selectedId)) {
-				const option = new Option(user.name, user.id, true, true);
-				$('#cpic').append(option).trigger('change');
-			}
-		});
-	});
-});
-@endif
-
-@if(old('company_owner', @$preference->company_owner))
-$.ajax({
-	url: `{{ route('getUser') }}`,
-	data: {
-		_token: '{!! csrf_token() !!}',
-		id: `{{ old('company_owner', @$preference->company_owner) }}`
-	},
-	dataType: 'json'
-}).then(data => {
-	const selectedId = `{{ old('company_owner', @$preference->company_owner) }}`;
-
-	data.forEach(group => {
-		group.users?.forEach(user => {
-			if (String(user.id) === String(selectedId)) {
-				const option = new Option(user.name, user.id, true, true);
-				$('#own').append(option).trigger('change');
-			}
-		});
-	});
-});
-@endif
+};
 
 @endsection

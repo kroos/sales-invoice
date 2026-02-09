@@ -48,6 +48,14 @@
 			@endif
 		</div>
 
+		<div class="form-group row m-2 @error('color') has-error @enderror">
+			<label for="color" class="col-sm-4 col-form-label col-form-label-sm">Color : </label>
+			<div class="col-sm-8">
+				<input type="text" name="color" id="color" value="{{ old('color', @$user->color) }}" class="form-control form-control-sm @error('color') is-invalid @enderror" placeholder="Color">
+				@error('color') <div class="invalid-feedback fw-lighter">{{ $message }}</div> @enderror
+			</div>
+		</div>
+
 		<div class="col-sm-12 justify-self-end m-4">
 			<button type="submit" class="btn btn-sm btn-primary m-3">
 				{{ __('Save') }}

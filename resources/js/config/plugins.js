@@ -19,7 +19,7 @@ const config = {
 		columnDefs: [
 			{ type: 'date', targets: [2] },
 		],
-		order: [[0, 'desc']],
+		order: [[0, 'asc']],
 		responsive: true,
 		autoWidth: false,
 		fixedHeader: true,
@@ -76,6 +76,18 @@ $('#table').DataTable({
     ...Config.datatable,
     paging: false, // override example
 });
+
+
+If you want to **extend** instead:
+
+```js
+columnDefs: [
+    ...(Config.datatable.columnDefs || []),
+    { type: 'date', targets: [1] },
+],
+```
+
+
 
 new Calendar(el, {
     ...Config.fullcalendar,

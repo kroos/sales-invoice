@@ -1,27 +1,29 @@
-const { routes, urls, olds } = window.data;
-
+const { route, url, old } = window.data;
 var table = $('#at').DataTable({
 	...config.datatable,
 	ajax: {
 		type: 'GET',
-		url: routes.getTaxes,
+		url: route.getCustomers,
 		dataSrc: '',
 		data: function(da){
 		},
 	},
 	columns: [
 		{ data: 'id', title: 'ID', defaultContent: '-', },
-		{ data: 'tax', title: 'Tax', defaultContent: '-', },
-		{ data: 'amount', title: 'Amount (%)', defaultContent: '-', },
+		{ data: 'client', title: 'Name', defaultContent: '-', },
+		{ data: 'client_address', title: 'Address', defaultContent: '-', },
+		{ data: 'client_poskod', title: 'Postcode', defaultContent: '-', },
+		{ data: 'client_phone', title: 'Phone', defaultContent: '-', },
+		{ data: 'client_email', title: 'Email', defaultContent: '-', },
 		{
 			data: 'id',
 			title: '#',
 			orderable: false,
 			searchable:false,
-			render: function(data,type,row){
+			render: function(data){
 				return `
 					<div class="btn-group btn-group-sm" role="group">
-						<a href="${urls.taxes}/${row.slug}/edit" class="btn btn-sm btn-outline-info" title="Edit">
+						<a href="${url.customers}/${data}/edit" class="btn btn-sm btn-outline-info" title="Edit">
 							<i class="fa-regular fa-pen-to-square"></i>
 						</a>
 
@@ -52,7 +54,7 @@ function SwalDelete(productId){
 		preConfirm: function(){
 			return new Promise(function(resolve) {
 				$.ajax({
-					url: `${urls.taxes}/${productId}`,
+					url: `${url.customers}/${productId}`,
 					type: 'DELETE',
 					data:	{
 								id: productId,

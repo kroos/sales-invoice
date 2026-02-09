@@ -1,32 +1,26 @@
 const { routes, urls, olds } = window.data;
-
 var table = $('#at').DataTable({
 	...config.datatable,
 	ajax: {
 		type: 'GET',
-		url: routes.getTaxes,
-		dataSrc: '',
+		url: routes.getUser,
 		data: function(da){
 		},
+		dataSrc: '',
 	},
 	columns: [
 		{ data: 'id', title: 'ID', defaultContent: '-', },
-		{ data: 'tax', title: 'Tax', defaultContent: '-', },
-		{ data: 'amount', title: 'Amount (%)', defaultContent: '-', },
+		{ data: 'group', title: 'Group', defaultContent: '-', },
 		{
 			data: 'id',
 			title: '#',
 			orderable: false,
 			searchable:false,
-			render: function(data,type,row){
+			render: function(data){
 				return `
 					<div class="btn-group btn-group-sm" role="group">
-						<a href="${urls.taxes}/${row.slug}/edit" class="btn btn-sm btn-outline-info" title="Edit">
-							<i class="fa-regular fa-pen-to-square"></i>
-						</a>
-
-						<button type="button" data-id="${data}" title="Delete" class="delete_button btn btn-sm btn-danger">
-							<i class="fas fa-trash fa-lg"></i>
+						<button type="button" data-id="${data}" title="Delete" class="delete_button btn btn-sm btn-outline-danger">
+							<i class="fas fa-trash"></i>
 						</button>
 					</div>
 				`
@@ -52,7 +46,7 @@ function SwalDelete(productId){
 		preConfirm: function(){
 			return new Promise(function(resolve) {
 				$.ajax({
-					url: `${urls.taxes}/${productId}`,
+					url: `${urls.usergroups}/${productId}`,
 					type: 'DELETE',
 					data:	{
 								id: productId,
@@ -71,4 +65,5 @@ function SwalDelete(productId){
 		},
 	});
 }
+
 
