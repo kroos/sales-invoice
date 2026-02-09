@@ -23,7 +23,7 @@ const config = {
 		responsive: true,
 		autoWidth: false,
 		fixedHeader: true,
-		dom: 'Bfrtip',
+		// dom: 'Bfrtip',
 	},
 
 	fullcalendar: {
@@ -55,8 +55,6 @@ const config = {
 		allowOutsideClick: false,
 		showLoaderOnConfirm: true,
 		confirmButtonText: 'Yes, delete it!',
-		/*confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',*/
 
 		cancelTitle: 'Cancelled',
 		cancelMessage: 'Your data is safe from delete',
