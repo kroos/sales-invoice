@@ -24,7 +24,7 @@ require('./jquery');
 	window.moment = require('moment');
 	moment().format();
 
-	require('bootstrapValidator5');
+	require('bootstrapvalidator5');
 
 	window.swal = require ('sweetalert2');
 
