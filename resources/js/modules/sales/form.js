@@ -1,5 +1,10 @@
-const { routes, old, id, auth } = window.data
-////////////////////////////////////////////////////////////////////////////////////
+const { routes, old, id, auth, errors } = window.data
+/* helper function */
+function getError(name) {
+    return errors[name] ? errors[name][0] : null;
+}
+
+/* date */
 // date input helper
 	$('#da').datepicker({
 		dateFormat: 'yy-mm-dd',
@@ -8,7 +13,7 @@ const { routes, old, id, auth } = window.data
 		$('#form').bootstrapValidator('revalidateField', 'date_sale');
 	});
 
-////////////////////////////////////////////////////////////////////////////////////
+/* helper function */
 function getSelectedProductIds() {
 	let ids = [];
 
@@ -151,10 +156,21 @@ $("#serial_wrap").addRemRow({
 					<i class="fas fa-trash"></i>
 				</button>
 			</div>
-			<div class="form-group col-sm-11 row m-0">
+			<div class="form-group col-sm-11 row m-0 ${getError(`${name}.${i}.tracking_number`) ? 'has-error' : ''}">
 				<label for="catel${i}" class="col-form-label col-sm-5">Receipt Or Tracking Postage : </label>
 				<div class="col-sm-7 my-auto">
-					<input type="text" name="${name}[${i}][tracking_number]" id="catel${i}" class="form-control form-control-sm" placeholder="Receipt Or Tracking Postage">
+					<input
+					 type="text"
+					 name="${name}[${i}][tracking_number]"
+					 id="catel${i}"
+					 class="form-control form-control-sm  ${getError(`${name}.${i}.tracking_number`) ? 'is-invalid' : ''}"
+					 placeholder="Receipt Or Tracking Postage"
+					>
+					${getError(`${name}.${i}.tracking_number`) ? `
+						<div class="invalid-feedback">
+							${getError(`${name}.${i}.tracking_number`)}
+						</div>
+					` : ''}
 				</div>
 			</div>
 		</div>
@@ -297,22 +313,59 @@ $("#invItems_wrap").addRemRow({
 				</button>
 			</div>
 
-			<div class="col-sm-3 form-group m-0 my-auto">
-				<select name="${name}[${i}][id_product]" id="series_${i}" class="series form-select form-select-sm">
-					<option value="">Please Choose</option>
-				</select>
+			<div class="col-sm-3 form-group m-0 my-auto ${getError(`${name}.${i}.id_product`) ? 'has-error' : ''}">
+				<select
+				 name="${name}[${i}][id_product]"
+				 id="series_${i}"
+				 class="series form-select form-select-sm ${getError(`${name}.${i}.id_product`) ? 'is-invalid' : ''}"
+				></select>
+				${getError(`${name}.${i}.id_product`) ? `
+					<div class="invalid-feedback">
+						${getError(`${name}.${i}.id_product`)}
+					</div>
+				` : ''}
 			</div>
 
-			<div class="col-sm-2 form-group row m-0 my-auto">
-				<input type="${auth}" name="${name}[${i}][commission]" class="comm form-control form-control-sm" placeholder="Commission (RM)" />
+			<div class="col-sm-2 form-group row m-0 my-auto ${getError(`${name}.${i}.commission`) ? 'has-error' : ''}">
+				<input
+				 type="${auth}"
+				 name="${name}[${i}][commission]"
+				 class="comm form-control form-control-sm  ${getError(`${name}.${i}.commission`) ? 'is-invalid' : ''}"
+				 placeholder="Commission"
+				>
+				${getError(`${name}.${i}.commission`) ? `
+					<div class="invalid-feedback">
+						${getError(`${name}.${i}.commission`)}
+					</div>
+				` : ''}
 			</div>
 
-			<div class="col-sm-2 form-group row m-0 my-auto">
-				<input type="text" name="${name}[${i}][retail]" class="rate form-control form-control-sm " placeholder="Retail (RM)"/>
+			<div class="col-sm-2 form-group row m-0 my-auto ${getError(`${name}.${i}.retail`) ? 'has-error' : ''}">
+				<input
+				 type="text"
+				 name="${name}[${i}][retail]"
+				 class="rate form-control form-control-sm  ${getError(`${name}.${i}.retail`) ? 'is-invalid' : ''}"
+				 placeholder="Retail (RM)"
+				>
+				${getError(`${name}.${i}.retail`) ? `
+					<div class="invalid-feedback">
+						${getError(`${name}.${i}.retail`)}
+					</div>
+				` : ''}
 			</div>
 
-			<div class="col-sm-2 form-group row m-0 my-auto">
-				<input type="text" name="${name}[${i}][quantity]" class="quan form-control form-control-sm" placeholder="Quantity" />
+			<div class="col-sm-2 form-group row m-0 my-auto ${getError(`${name}.${i}.quantity`) ? 'has-error' : ''}">
+				<input
+				 type="text"
+				 name="${name}[${i}][quantity]"
+				 class="quan form-control form-control-sm  ${getError(`${name}.${i}.quantity`) ? 'is-invalid' : ''}"
+				 placeholder="Quantity"
+			>
+				${getError(`${name}.${i}.quantity`) ? `
+					<div class="invalid-feedback">
+						${getError(`${name}.${i}.quantity`)}
+					</div>
+				` : ''}
 			</div>
 
 			<div class="col-sm-2 m-0 my-auto text-right">
@@ -423,14 +476,43 @@ $("#payment_wrap").addRemRow({
 					<i class="fas fa-trash"></i>
 				</button>
 			</div>
-			<div class="col-sm-6 form-group m-0 my-auto">
-				<select name="${name}[${i}][id_bank]" class="form-select form-select-sm bank"></select>
+			<div class="col-sm-6 form-group m-0 my-auto ${getError(`${name}.${i}.id_bank`) ? 'has-error' : ''}">
+				<select
+				 name="${name}[${i}][id_bank]"
+				 class="form-select form-select-sm bank  ${getError(`${name}.${i}.id_bank`) ? 'is-invalid' : ''}
+				"></select>
+				${getError(`${name}.${i}.id_bank`) ? `
+					<div class="invalid-feedback">
+						${getError(`${name}.${i}.id_bank`)}
+					</div>
+				` : ''}
 			</div>
-			<div class="col-sm-3 form-group m-0 my-auto">
-				<input type="text" name="${name}[${i}][date_payment]" class="form-control form-control-sm datep" id="datep${i}" placeholder="Date Payment"/>
+			<div class="col-sm-3 form-group m-0 my-auto ${getError(`${name}.${i}.date_payment`) ? 'has-error' : ''}">
+				<input
+				 type="text"
+				 name="${name}[${i}][date_payment]"
+				 class="form-control form-control-sm datep  ${getError(`${name}.${i}.date_payment`) ? 'is-invalid' : ''}"
+				 id="datep${i}"
+				 placeholder="Date Payment"
+				>
+				${getError(`${name}.${i}.date_payment`) ? `
+					<div class="invalid-feedback">
+						${getError(`${name}.${i}.date_payment`)}
+					</div>
+				` : ''}
 			</div>
-			<div class="col-sm-2 form-group m-0 my-auto @error('pay.*.amount') has-error @enderror">
-				<input type="text" name="${name}[${i}][amount]" class="pamount form-control" placeholder="Amount (RM)"/>
+			<div class="col-sm-2 form-group m-0 my-auto ${getError(`${name}.${i}.amount`) ? 'has-error' : ''}">
+				<input
+				 type="text"
+				 name="${name}[${i}][amount]"
+				 class="pamount form-control form-control-sm  ${getError(`${name}.${i}.amount`) ? 'is-invalid' : ''}"
+				 placeholder="Amount"
+				>
+				${getError(`${name}.${i}.amount`) ? `
+					<div class="invalid-feedback">
+						${getError(`${name}.${i}.amount`)}
+					</div>
+				` : ''}
 			</div>
 		</div>
 	`,

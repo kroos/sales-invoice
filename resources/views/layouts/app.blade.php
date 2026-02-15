@@ -74,23 +74,12 @@ $currentYear = Carbon::now()->year;
 	<!-- footer end -->
 </body>
 <script src="{{ mix('js/app.js') }}"></script>
-<script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
-<script src="{{ asset('js/ckeditor/adapters/jquery.js') }}"></script>
-<script>
-{{-- ✅ Page data injection --}}
-	@yield('js')
+<script type="module">
+	$(document).ready(function(){
+		{{-- ✅ Page data injection --}}
+		@section('js')
+		@show
+	});
 </script>
-<!-- <script type="module">
-	jQuery.noConflict ();
-	(function($){
-		$(document).ready(function(){
-			$.get('/sanctum/csrf-cookie').done(function(){
-				@section('js-')
-				@show
-			});
-		});
-	})(jQuery);
-</script>
- -->
- </html>
+</html>
 
