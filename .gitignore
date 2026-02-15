@@ -28,3 +28,5 @@ Thumbs.db
 /public/fonts
 /public/images
 /public/mix-manifest.json
+/public/js/app.js.map
+/.qodo
