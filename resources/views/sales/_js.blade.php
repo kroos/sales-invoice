@@ -6,7 +6,7 @@ $oldItemsValue = old('serial', $itemsArray);
 
 $invoiceItems = @$sale?->invitems()?->with('product')?->get(['id', 'id_product', 'commission', 'retail', 'quantity']);
 $invoiceItemsArray = $invoiceItems?->toArray()??[];
-$oldinvoiceItemsValue = old('serial', $invoiceItemsArray);
+$oldinvoiceItemsValue = old('inv', $invoiceItemsArray);
 // dd($oldinvoiceItemsValue);
 
 $salespaymentItems = @$sale?->salespayment()?->with('bank')?->get(['id', 'id_bank', 'date_payment', 'amount']);

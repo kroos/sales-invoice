@@ -238,8 +238,8 @@ function num(obj) {
 $("#invItems_wrap").addRemRow({
 	addBtn: "#invItems_add",
 	maxFields: 20,
-	removeClass: "invItems_remove",
 	fieldName: "inv",
+	removeClass: "invItems_remove",
 	rowSelector: "invItems",
 
 	swal: {
@@ -802,7 +802,7 @@ if(old.repeatcust.length > 0){
 // restore old data tracking_number
 if (old.tracking_number.length > 0) {
 	old.tracking_number.forEach(function (jrnl, i) {
-		$(".add_serial").trigger('click');
+		$("#serial_add").trigger('click');
 
 		const $row = $(".serial").eq(i);
 
@@ -815,8 +815,8 @@ if (old.tracking_number.length > 0) {
 // restore old data invoice items
 if (old.inItems.length > 0) {
 	old.inItems.forEach(function (invItems, j) {
-		$(".add_field").trigger('click');
-		const $row = $(".invItems").eq(j);
+		$("#invItems_add").trigger('click');
+		const $row = $(`#invItems_${j}`);
 
 		const $id_product = $row.find(`[name="inv[${j}][id_product]"]`).val(invItems.id_product || '');
 		const option1 = new Option(invItems.product.product, invItems.id_product, true, true);
@@ -833,18 +833,18 @@ if (old.inItems.length > 0) {
 ////////////////////////////////////////////////////////////////////////////////////
 // restore old data salespayment items
 if (old.payItems.length > 0) {
-	old.payItems.forEach(function (payItems, j) {
+	old.payItems.forEach(function (payItem, j) {
 		$("#payment_add").trigger('click');
 		const $row = $(".payment").eq(j);
 
-		const $id_product = $row.find(`select[name="pay[${j}][id_bank]"]`).val(payItems.id_bank || '');
-		const option1 = new Option(payItems.bank.bank, payItems.id_bank, true, true);
+		const $id_product = $row.find(`select[name="pay[${j}][id_bank]"]`).val(payItem.id_bank || '');
+		const option1 = new Option(payItem.bank.bank, payItem.id_bank, true, true);
 		$id_product.append(option1).trigger('change');
 
-		$row.find(`input[name="pay[${j}][id]"]`).val(payItems.id || '');
-		$row.find(`input[name="pay[${j}][date_payment]"]`).val( moment(payItems.date_payment).format('YYYY-MM-DD') || '');
-		console.log(moment(payItems.date_payment).format('YYYY-MM-DD'));
-		$row.find(`input[name="pay[${j}][amount]"]`).val(payItems.amount || '');
+		$row.find(`input[name="pay[${j}][id]"]`).val(payItem.id || '');
+		$row.find(`input[name="pay[${j}][date_payment]"]`).val( moment(payItem.date_payment).format('YYYY-MM-DD') || '');
+		console.log(moment(payItem.date_payment).format('YYYY-MM-DD'));
+		$row.find(`input[name="pay[${j}][amount]"]`).val(payItem.amount || '');
 	});
 }
 
@@ -896,4 +896,3 @@ $('#form').bootstrapValidator({
 });
 
 ////////////////////////////////////////////////////////////////////////////////////
-
