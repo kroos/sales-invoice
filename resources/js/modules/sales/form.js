@@ -1,4 +1,4 @@
-const { routes, old, id, auth, errors } = window.data
+const { routes, old, id, auth, errors } = window.data;
 /* helper function */
 function getError(name) {
     return errors[name] ? errors[name][0] : null;
@@ -30,10 +30,10 @@ function getSelectedProductIds() {
 			url: routes.getProducts,
 			type: 'GET',
 			dataType: 'json',
-			delay: 250,											// Delay to reduce server requests
+			delay: 250,							// Delay to reduce server requests
 			data: function (params) {
 				return {
-					search: params.term,				// Search query
+					search: params.term,		// Search query
 					idIn: ids??[],
 				}
 			},
@@ -138,7 +138,7 @@ $("#serial_wrap").addRemRow({
 		form: '#form',
 		fields: {
 			'[tracking_number]': {
-				validator: {
+				validators: {
 					notEmpty: {
 						message: 'Please insert tracking number/bill number/receipt number.'
 					}
@@ -156,26 +156,22 @@ $("#serial_wrap").addRemRow({
 					<i class="fas fa-trash"></i>
 				</button>
 			</div>
-			<div class="form-group col-sm-11 row m-0 ${getError(`${name}.${i}.tracking_number`) ? 'has-error' : ''}">
+			<div class="form-group col-sm-11 row m-0 ">
 				<label for="catel${i}" class="col-form-label col-sm-5">Receipt Or Tracking Postage : </label>
 				<div class="col-sm-7 my-auto">
 					<input
 					 type="text"
 					 name="${name}[${i}][tracking_number]"
 					 id="catel${i}"
-					 class="form-control form-control-sm  ${getError(`${name}.${i}.tracking_number`) ? 'is-invalid' : ''}"
+					 class="form-control form-control-sm"
 					 placeholder="Receipt Or Tracking Postage"
 					>
-					${getError(`${name}.${i}.tracking_number`) ? `
-						<div class="invalid-feedback">
-							${getError(`${name}.${i}.tracking_number`)}
-						</div>
-					` : ''}
 				</div>
 			</div>
 		</div>
 	`,
 	onAdd: (i, e, $r, name) => {
+		console.log($r);
 	},
 	onRemove: async (i, event, $row, name) => {
 	}
@@ -260,14 +256,14 @@ $("#invItems_wrap").addRemRow({
 		fields: {
 
 			'[id_product]': {
-				validator: {
+				validators: {
 					notEmpty: {
 						message: 'Please choose an item. '
 					}
 				}
 			},
 			'[commission]': {
-				validator: {
+				validators: {
 					notEmpty: {
 						message: 'Please insert commission for this item. '
 					},
@@ -278,7 +274,7 @@ $("#invItems_wrap").addRemRow({
 				}
 			},
 			'[retail]': {
-				validator: {
+				validators: {
 					notEmpty: {
 						message: 'Please insert retail price for this item. '
 					},
@@ -289,7 +285,7 @@ $("#invItems_wrap").addRemRow({
 				}
 			},
 			'[quantity]': {
-				validator: {
+				validators: {
 					notEmpty: {
 						message: 'Please insert quantity for this item. '
 					},
@@ -436,14 +432,14 @@ $("#payment_wrap").addRemRow({
 		fields: {
 
 			'[id_bank]': {
-				validator: {
+				validators: {
 					notEmpty: {
 						message: 'Please choose payment bank. '
 					}
 				}
 			},
 			'[date_payment]': {
-				validator: {
+				validators: {
 					notEmpty: {
 						message: 'Please insert payment date. '
 					},
@@ -454,7 +450,7 @@ $("#payment_wrap").addRemRow({
 				}
 			},
 			'[amount]': {
-				validator: {
+				validators: {
 					notEmpty: {
 						message: 'Please insert payment amount. '
 					},
@@ -792,7 +788,7 @@ if(old.repeatcust.length > 0){
 	}).then(data => {
 		const item = Array.isArray(data) ? data[0] : data;	// change object to array
 		if (!item) return;
-		console.log(data.client, item.client);
+		// console.log(data.client, item.client);
 		const option = new Option(item.client, item.id, true, true);
 		$('#custsel').append(option).trigger('change');
 	});
