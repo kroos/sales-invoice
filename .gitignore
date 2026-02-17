@@ -30,3 +30,6 @@ Thumbs.db
 /public/mix-manifest.json
 /public/js/app.js.map
 /.qodo
+/public/css/tailwind.css.map
+/public/css/app.css.map
+/public/js/app.js.LICENSE.txt
