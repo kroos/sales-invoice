@@ -1,6 +1,5 @@
 <?php
 use \Carbon\Carbon;
-
 $currentYear = Carbon::now()->year;
 ?>
 <!doctype html>
@@ -26,49 +25,53 @@ $currentYear = Carbon::now()->year;
 	<!-- Livewire CSS -->
 
 </head>
-<body class="bg-primary-subtle bg-opacity-75 min-vh-100 d-flex flex-column" data-route="{{ Route::currentRouteName() }}">
+<body class="bg-secondary-subtle bg-opacity-75 min-vh-100 d-flex flex-column" data-route="{{ Route::currentRouteName() }}">
 
 	<!-- 1st nav -->
 	@include('layouts.navbar')
 	<!-- 1st nav end -->
 
+	<div class="container-fluid flex-fill d-flex flex-column">
+
 		<!-- 2nd nav -->
 		@include('layouts.navmiddle')
 		<!-- 2nd nav end -->
+		<div class="container-fluid p-1 mx-auto d-flex justify-content-between flex-fill">
 
-	<div class="col-sm-12 mx-auto d-flex flex-fill justify-content-evenly p-1">
-
-		<div class="col-sm-2 m-0">
-			<!-- left side menu -->
-			@include('layouts.navleftside')
-			<!-- left side menu end -->
-		</div>
-
-
-		<div class="col-sm-7 m-0 my-2 p-1 align-self-center">
-			<div class="col-sm-12">
-				<!-- error message -->
-				@include('layouts.messages')
-				<!-- error message end -->
+			<div class="col-sm-2 m-0">
+				<!-- left side menu -->
+				@include('layouts.navleftside')
+				<!-- left side menu end -->
 			</div>
-		<!-- content -->
-		@isset($slot)
-			<div class="tw">{{ $slot }}</div>
-		@endisset
-		@yield('content')
-		<!-- content end -->
-		</div>
 
-		<div class="col-sm-2 m-0 p-1">
-			<!-- right side info -->
-			@include('layouts.inforightside')
-			<!-- right side info end -->
+
+			<div class="col-sm-7 m-0 my-2 p-1 align-self-center">
+				<div class="col-sm-12">
+					<!-- error message -->
+					@include('layouts.messages')
+					<!-- error message end -->
+				</div>
+			<!-- content -->
+			@isset($slot)
+				<div class="tw">{{ $slot }}</div>
+			@endisset
+			@yield('content')
+			<!-- content end -->
+			</div>
+
+			<div class="col-sm-2 m-0 p-1">
+				<!-- right side info -->
+				@include('layouts.inforightside')
+				<!-- right side info end -->
+			</div>
+
 		</div>
 
 	</div>
+
 	<!-- footer -->
 	<div class="container m-0 mx-auto py-1 align-self-end text-center text-sm text-light-emphasis">
-		&copy; My Themes<br />Themes By Bootswatch<br />
+		&copy; {{ config('app.name', 'Laravel') }} {{ $currentYear }}<br />
 		Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
 	</div>
 	<!-- footer end -->
