@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>@yield('title', 'BTM Document')</title>
+	<title>{{ config('app.name', 'Laravel') }}</title>
 	<style>
 		* { margin: 0; padding: 0; box-sizing: border-box; }
 		@page { size: A4; margin: 0; }
@@ -157,7 +157,7 @@
 	<!-- Footer -->
 	<div class="footer">
 		<div class="footer-box">
-			© Document
+			&copy; {{ config('app.name', 'Laravel') }} {{ $currentYear }}
 		</div>
 	</div>
 </body>
