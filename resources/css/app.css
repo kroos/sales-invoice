@@ -48,7 +48,7 @@
 @import '../../node_modules/sweetalert2/dist/sweetalert2.css';
 
 /*jquery validators*/
-@import 'bootstrapValidator5';
+@import 'bootstrapvalidator5';
 
 /*Fonts*/
 @import url('https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&display=swap');
