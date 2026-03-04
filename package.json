@@ -28,7 +28,7 @@
 		"bootstrap-icons": "^1.13.1",
 		"bootstrapvalidator5": "^2.0.0",
 		"chart.js": "^4.5.1",
-    "ckeditor5": "^47.5.0",
+    "ckeditor5": "^47.6.0",
 		"cross-env": "^10",
 		"datatables.net": "^2.3.7",
 		"datatables.net-autofill-bs5": "^2.7.1",
